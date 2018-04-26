@@ -77,8 +77,8 @@ inline void PhoneBookList::move_to_previous()
     if (m_entries_.empty())
         return;
     --itr_current_entry_;
-    if (itr_current_entry_ == m_entries_.end())
-        itr_current_entry_ = m_entries_.begin();
+    if (itr_current_entry_ == m_entries_.begin() - 1)
+        itr_current_entry_ = m_entries_.end() - 1;
 }
 
 
