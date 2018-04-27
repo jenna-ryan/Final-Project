@@ -211,36 +211,58 @@ void SoccerList::print_searches(const std::string & file_name) const
 
 bool SoccerList::find()
 {
-    cout << "Enter '-1' to leave field unsearched" << std::endl;
+    cout << endl << "SEARCH: Enter '-1' to leave a field unsearched" << std::endl << std::endl;
             cout << "last name: ";
             string lastName;
             getline(cin, lastName);
-			cout << "Enter '-1' to leave field unsearched" << std::endl;
-            cout << "first name: ";
+
+            cout << endl << "first name: ";
             string firstName;
             getline(cin, firstName);
-			cout << "Enter '-1' to leave field unsearched" << std::endl;
-            cout << "payment status(1 for paid, 0 for unpaid): ";
-            int status;
-            cin >> status;
-			bool valid = false;
+            cout <<  endl << "payment status(1 for paid, 0 for unpaid): ";
+
+
+            bool valid = false;
+            bool status;
+			while(!valid)
+            {
+        	    string status_ss;
+            	getline(cin, status_ss);
+				std::stringstream ss(status_ss);
+				ss >> status;
+				if(ss.eof())
+					valid = true;
+                else
+                    cout << "   Enter '1' if player is paid and '0' if player is unpaid\n";
+			}
+
+			valid = false;
 			int yob;
-            string junk;
-            getline(cin, junk); //
+            cout << endl << "year of birth: ";
 			while(!valid){
-				cout << "Enter '-1' to leave field unsearched" << std::endl;
-    	        cout << "year of birth: ";
         	    string yob_ss;
             	getline(cin, yob_ss);
 				std::stringstream ss(yob_ss);
 				ss >> yob;
 				if(ss.eof())
 					valid = true;
+                else
+                    cout << "   Please re-enter year: ";
 			}
-			cout << "Enter '-1' to leave field unsearched" << std::endl;
-            cout << "category: U";
+
+			valid = false;
             int category;
-			std::cin >> category;
+            cout << endl << "category: U";
+			while(!valid){
+        	    string cat_ss;
+            	getline(cin, cat_ss);
+				std::stringstream ss(cat_ss);
+				ss >> category;
+				if(ss.eof())
+					valid = true;
+                else
+                    cout << "   Please re-enter category: ";
+			}
 
     std::map<std::string, SoccerEntry> temp;
 
