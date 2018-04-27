@@ -146,9 +146,22 @@ void SoccerList::print_to_file(const std::string & file_name) const
         out.open(fn);
     }
 
-    for(auto itr = m_entries_.begin(); itr != m_entries_.end(); itr++)
-            out << itr->second << endl;
+    int cat[6] = {6, 8, 10, 12, 14, 17};
 
+    for(int i = 0; i < 6; i++)
+    {
+        out << 'U' << cat[i] << " Players: \n";
+
+        for(auto itr = m_entries_.begin(); itr != m_entries_.end(); itr++)
+        {
+            if ((itr->second).category == cat[i])
+            {
+                        out << (itr->second).firstName << ' '
+                            << (itr->second).lastName << endl;
+            }
+        }
+    out << endl;
+    }
 }
 
 void SoccerList::print_searches(const std::string & file_name) const
