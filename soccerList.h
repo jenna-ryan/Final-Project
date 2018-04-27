@@ -33,6 +33,10 @@ public:
     void new_season(int year);
     void clear_searches();
     std::string last_name_check(const std::string & ln);
+    void add_search();
+    void show_message() const;
+    void remove_message() {message_.clear();}
+
 
 private:
     int season_;
@@ -46,7 +50,16 @@ private:
     std::map<std::string, SoccerEntry>::iterator
         itr_search_current_entry_;
     int search_rank_location_ = 1;
+
+    std::string message_ = "";
 };
+
+inline void SoccerList::show_message() const
+{
+    if(message_.empty())
+        return;
+    std::cout << message_ << std::endl;
+}
 
 inline void SoccerList::new_season(int year)
 {
@@ -69,6 +82,7 @@ inline void SoccerList::delete_player()
     auto toDel = itr_current_entry_;
     move_to_previous();
     m_entries_.erase(toDel);
+    --rank_location_;
 }
 
 inline void SoccerList::full_delete()
@@ -78,10 +92,12 @@ inline void SoccerList::full_delete()
     auto toDel = itr_current_entry_;
     move_to_previous();
     m_entries_.erase(toDel);
+    --rank_location_;
 
     toDel = itr_search_current_entry_;
     previous_search();
     search_results_.erase(toDel);
+    --search_rank_location_;
 }
 
 inline void SoccerList::add(const std::string & firstName, const std::string & lastName, int yob, bool status)
@@ -102,6 +118,15 @@ inline void SoccerList::add(const std::string & firstName, const std::string & l
 
     rank_location_ = distance(m_entries_.begin(),itr_current_entry_) + 1;
 
+}
+
+inline void SoccerList::add_search()
+{
+    auto result = search_results_.insert({itr_current_entry_->first,itr_current_entry_->second});
+
+    itr_search_current_entry_ = result.first;
+
+    search_rank_location_ = distance(search_results_.begin(),itr_search_current_entry_) + 1;
 }
 
 inline void SoccerList::display_current_entry() const
@@ -149,18 +174,44 @@ inline void SoccerList::next_search()
     ++search_rank_location_;
     if(search_rank_location_ > search_results_.size())
         search_rank_location_ = 1;
+
+    auto loc = m_entries_.find(itr_search_current_entry_->first);
+    itr_current_entry_ = loc;
+    rank_location_ = distance(m_entries_.begin(),itr_current_entry_) + 1;
 }
 
 inline void SoccerList::previous_search()
 {
     if (search_results_.empty())
         return;
-    --itr_search_current_entry_;
-    if (itr_search_current_entry_ == --search_results_.begin())
-        itr_search_current_entry_ = --search_results_.end();
-    --search_rank_location_;
-    if(search_rank_location_ <= 0)
-        search_rank_location_ = search_results_.size();
+
+    if(search_results_.size() == 2)
+    {
+        if(itr_search_current_entry_ == search_results_.begin())
+       {
+            itr_search_current_entry_ = --search_results_.end();
+            search_rank_location_ = 2;
+       }
+       else
+       {
+            itr_search_current_entry_ = search_results_.begin();
+            search_rank_location_ = 1;
+       }
+    }
+    else
+    {
+        --itr_search_current_entry_;
+        if (itr_search_current_entry_ == --search_results_.begin())
+            itr_search_current_entry_ = --search_results_.end();
+        --search_rank_location_;
+        if(search_rank_location_ == 0)
+            search_rank_location_ = search_results_.size();
+    }
+
+    auto loc = m_entries_.find(itr_search_current_entry_->first);
+    itr_current_entry_ = loc;
+    rank_location_ = distance(m_entries_.begin(),itr_current_entry_) + 1;
+
 }
 /// end SEARCH
 

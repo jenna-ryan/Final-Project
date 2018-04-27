@@ -46,6 +46,8 @@ void SoccerProg::display_entry_and_menu() const {
          << "  previous  add     delete  print(z)  new season(r)\n"
          << short_separator << endl;
 
+    entry_list_.show_message();
+
 }
 
 void SoccerProg::search_display_entry_and_menu() const {
@@ -64,6 +66,7 @@ void SoccerProg::search_display_entry_and_menu() const {
 
 void SoccerProg::execute(char command, bool & done)
 {
+    entry_list_.remove_message();
     switch (command) {
         case 'n': {
             entry_list_.move_to_next();
@@ -188,6 +191,7 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             bool new_status;
             cin >> new_status;
             entry_list_.add(first_name, last_name, new_yob, new_status);
+            entry_list_.add_search();
             break;
         }
         case 'd': {

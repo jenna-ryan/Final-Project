@@ -54,6 +54,13 @@ void SoccerList::edit_current()
          << "   year of birth (y)\n"
          << "   registration status (r)\n" << std::endl;
 
+    if(search_results_.empty()== 0)
+    {
+        itr_current_entry_ = m_entries_.find(itr_search_current_entry_->first);
+        rank_location_ = distance(m_entries_.begin(),itr_current_entry_) + 1;
+    }
+
+
     char com;
     std::cin >> com;
     switch (com) {
@@ -69,10 +76,15 @@ void SoccerList::edit_current()
             std::cout << "Enter new last name: ";
             string ln;
             std::cin >> ln;
+            ln = last_name_check(ln);
+
             (itr_current_entry_->second).lastName = ln;
             SoccerEntry temp = (itr_current_entry_->second);
             m_entries_.erase(itr_current_entry_);
             m_entries_[ln] = temp;
+            itr_current_entry_ = m_entries_.find(ln);
+            rank_location_ = distance(m_entries_.begin(),itr_current_entry_) + 1;
+            break;
 
         }
         case 'y':
@@ -98,6 +110,14 @@ void SoccerList::edit_current()
             std::cin >> (itr_current_entry_->second).status;
              break;
         }
+    }
+
+    SoccerEntry temp = itr_current_entry_->second;
+    std::string key = itr_current_entry_->first;
+
+    if(!search_results_.empty())
+    {
+        itr_search_current_entry_->second = temp;
     }
 }
 
@@ -307,7 +327,10 @@ bool SoccerList::find()
     search_results_ = temp;
 
     if(search_results_.empty())
+    {
+        message_ = "No players matching search criteria.\n";
         return 0;
+    }
     else{
         itr_search_current_entry_ = search_results_.begin();
         return 1;
