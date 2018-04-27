@@ -182,9 +182,18 @@ void PhoneBook::execute(char command, bool & done)
 		}
 		case 'r': {
             int year;
+            char choice;
 		    cout << "The year of the new season: ";
 		    cin >> year;
-// not finished
+		    cout << "Are you sure you want to proceed? (y/n)\n";
+		    cin >> choice;
+
+		    if(choice == 'N' || choice == 'n')
+                break;
+            else
+            {
+                entry_list_.new_season(year);
+            }
 			break;
 		}
         case 'q': {
@@ -246,7 +255,7 @@ void PhoneBook::search_execute(char command, bool & done, bool & really_done)
 		}
 		case 'r': {
 
-			done = true;
+            done = true;
 			break;
 		}
         case 'q': {

@@ -27,6 +27,9 @@ public:
     void print_searches(const std::string & file_name) const;
     void disp_stats();
     int compute_category(int yob);
+    void new_season(int year){
+        m_entries_.clear();
+        season_ = year;};
 
 private:
     std::map<std::string, PhoneBookEntry> m_entries_;
