@@ -36,6 +36,8 @@ private:
     std::map<std::string, PhoneBookEntry>::iterator
         itr_current_entry_;
     int season_;
+    int rank_location_ = 1;
+    std::map<std::string, PhoneBookEntry> search_results_;
 };
 
 inline void SoccerList::delete_player()
@@ -69,6 +71,7 @@ inline void SoccerList::display_current_entry() const
     if (m_entries_.empty())
         return;
     std::cout << itr_current_entry_->second;
+    std::cout << "      Player " << rank_location_ << " of " << m_entries_.size() << std::endl;
 }
 
 inline void SoccerList::move_to_next()
@@ -78,6 +81,9 @@ inline void SoccerList::move_to_next()
     ++itr_current_entry_;
     if (itr_current_entry_ == m_entries_.end())
         itr_current_entry_ = m_entries_.begin();
+    ++rank_location_;
+    if(rank_location_ > m_entries_.size())
+        rank_location_ = 1;
 }
 
 inline void SoccerList::move_to_previous()
@@ -87,6 +93,9 @@ inline void SoccerList::move_to_previous()
     --itr_current_entry_;
     if (itr_current_entry_ == --m_entries_.begin())
         itr_current_entry_ = --m_entries_.end();
+    --rank_location_;
+    if(rank_location_ == 0)
+        rank_location_ = m_entries_.size();
 }
 
 
