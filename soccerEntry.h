@@ -18,8 +18,7 @@ public:
         firstName(firstName0), lastName(lastName0),
 		yob(yob0), status(status0), category(category0) {}
 
-
-//    void change_fn(const std::string & fn) {firstName = fn;}
+    void print_raw( std::ofstream & out, const PhoneBookEntry & e);
 
     std::string firstName;
 	std::string lastName;
@@ -27,6 +26,16 @@ public:
     bool status; //0 for unpaid, 1 for paid
 	int category;
 };
+
+inline void print_raw( std::ofstream & out, const PhoneBookEntry & e)
+{
+    out << e.firstName << std::endl << e.lastName << std::endl << e.yob << std::endl;
+	if(e.status == 1)
+		out << 1 << std::endl;
+	else
+		out << 0 << std::endl;
+	out << e.category << std::endl;
+}
 
 inline std::istream & operator>>(std::istream & in,
                                  PhoneBookEntry & e)

@@ -54,7 +54,14 @@ void PhoneBookList::read_file(const std::string & file_name)
 
 void PhoneBookList::write_file(const std::string & file_name) const
 {
-    cout << "Saving not yet implemented\n";
+    ofstream out(file_name);
+    cout << "PLAYER INFORMATION SAVED\n";
+    out << season_ << endl << m_entries_.size() << endl;
+    for(auto itr = m_entries_.begin(); itr != m_entries_.end(); itr++)
+    {
+        print_raw(out, itr->second);
+
+    }
 }
 
 void PhoneBookList::print_to_file(const std::string & file_name) const
