@@ -20,6 +20,7 @@ public:
     void previous_search();
     void add(const std::string & firstName, const std::string & lastName, int yob, bool status);
     void delete_player();
+    void full_delete();
     void edit_current();
     bool find();
     bool empty() const { return m_entries_.empty(); }
@@ -29,10 +30,9 @@ public:
     void print_searches(const std::string & file_name) const;
     void disp_stats();
     int compute_category(int yob);
-    void new_season(int year){
-        m_entries_.clear();
-        season_ = year;};
+    void new_season(int year);
     void clear_searches();
+    std::string last_name_check(const std::string & ln);
 
 private:
     int season_;
@@ -47,6 +47,12 @@ private:
         itr_search_current_entry_;
     int search_rank_location_ = 1;
 };
+
+inline void SoccerList::new_season(int year)
+{
+    m_entries_.clear();
+    season_ = year;
+}
 
 inline void SoccerList::clear_searches()
     {
@@ -65,9 +71,21 @@ inline void SoccerList::delete_player()
     m_entries_.erase(toDel);
 }
 
+inline void SoccerList::full_delete()
+{
+    if( m_entries_.empty() || search_results_.empty())
+        return;
+    auto toDel = itr_current_entry_;
+    move_to_previous();
+    m_entries_.erase(toDel);
+
+    toDel = itr_search_current_entry_;
+    previous_search();
+    search_results_.erase(toDel);
+}
+
 inline void SoccerList::add(const std::string & firstName, const std::string & lastName, int yob, bool status)
 {
-    ///NOTE: changed cin to be yob, not category
     int category = season_-yob;
     while (category<4 || category>16)
     {
@@ -77,6 +95,7 @@ inline void SoccerList::add(const std::string & firstName, const std::string & l
         category = season_ - yob;
     }
     category = compute_category(yob);
+
     auto result =
         m_entries_.insert({lastName, SoccerEntry(firstName, lastName, yob, status, category)});
     itr_current_entry_ = result.first;
@@ -140,7 +159,7 @@ inline void SoccerList::previous_search()
     if(search_rank_location_ <= 0)
         search_rank_location_ = search_results_.size();
 }
-/// SEARCH
+/// end SEARCH
 
 
 inline void SoccerList::search_display_current_entry() const

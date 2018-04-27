@@ -16,6 +16,16 @@ using std::string;
 #include<vector>
 #include<sstream>
 
+std::string SoccerList::last_name_check(const std::string & ln)
+{
+    std::string newName = ln;
+    while(m_entries_.find(newName) != m_entries_.end())
+        newName = newName + " ";
+
+    return newName;
+}
+
+
 int SoccerList::compute_category(int yob)
 {
     int age = season_ - yob;
@@ -57,8 +67,13 @@ void SoccerList::edit_current()
         case 'l':
         {
             std::cout << "Enter new last name: ";
-            std::cin >> (itr_current_entry_->second).lastName;
-            break;
+            string ln;
+            std::cin >> ln;
+            (itr_current_entry_->second).lastName = ln;
+            SoccerEntry temp = (itr_current_entry_->second);
+            m_entries_.erase(itr_current_entry_);
+            m_entries_[ln] = temp;
+
         }
         case 'y':
         {

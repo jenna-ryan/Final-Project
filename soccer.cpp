@@ -98,6 +98,7 @@ void SoccerProg::execute(char command, bool & done)
             cout << "last name: ";
             string last_name;
             getline(cin, last_name);
+            last_name = entry_list_.last_name_check(last_name);
             cout << "year of birth: ";
             int new_yob;
             cin >> new_yob;
@@ -178,6 +179,7 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             cout << "last name: ";
             string last_name;
             getline(cin, last_name);
+            last_name = entry_list_.last_name_check(last_name);
             cout << "year of birth: ";
             int new_yob;
             cin >> new_yob;
@@ -188,8 +190,11 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             break;
         }
         case 'd': {
-            // Not yet implemented
-            //anything added to search_results_ must also be added to m_entries_
+            cout << "Are you sure you want to delete this player? (y/n) ";
+            char choice;
+            cin >> choice;
+            if(choice == 'Y' || choice == 'y')
+                entry_list_.full_delete();
             break;
         }
 		case 'z': {
