@@ -36,6 +36,7 @@ public:
     void add_search();
     void show_message() const;
     void remove_message() {message_.clear();}
+    void set_message(const std::string & msg) {message_ = msg;}
 
 
 private:
@@ -68,11 +69,11 @@ inline void SoccerList::new_season(int year)
 }
 
 inline void SoccerList::clear_searches()
-    {
-        search_rank_location_ = 1;
-        search_results_.clear();
-        itr_search_current_entry_ = search_results_.begin();
-    }
+{
+    search_rank_location_ = 1;
+    search_results_.clear();
+    itr_search_current_entry_ = search_results_.begin();
+}
 
 
 inline void SoccerList::delete_player()

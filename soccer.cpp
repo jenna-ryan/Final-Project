@@ -62,6 +62,8 @@ void SoccerProg::search_display_entry_and_menu() const {
          << "  next      edit    add        return  search\n"
          << "  previous  delete  print(z)   quit\n"
          << short_separator << endl;
+
+    entry_list_.show_message();
 }
 
 void SoccerProg::execute(char command, bool & done)
@@ -87,12 +89,10 @@ void SoccerProg::execute(char command, bool & done)
         case 's': {
 
 			bool found = entry_list_.find();
-
 			if(!found)
-                cout << "Entry not found." << endl;
+                entry_list_.set_message("Entry not found.\n");
             else
                 search_run(done);
-
             break;
         }
         case 'a': {
@@ -161,6 +161,7 @@ void SoccerProg::execute(char command, bool & done)
 
 void SoccerProg::search_execute(char command, bool & done, bool & really_done)
 {
+    entry_list_.remove_message();
     switch (command) {
         case 'n': {
             entry_list_.next_search();
@@ -213,6 +214,7 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             entry_list_.clear_searches();
             done = true;
 			break;
+			return;
 		}
         case 'q': {
             entry_list_.write_file(cs_file_name);
@@ -225,10 +227,7 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
 			bool found = entry_list_.find();
 
 			if(!found)
-                cout << "Entry not found." << endl;
-            else
-                search_run(done);
-
+                entry_list_.set_message("Entry not found.\n");
             break;
         }
     }
