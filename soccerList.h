@@ -38,9 +38,10 @@ public:
     void remove_message() {message_.clear();}
     void set_message(const std::string & msg) {message_ = msg;}
 
+    int season_;
 
 private:
-    int season_;
+
 
     std::map<std::string, SoccerEntry> m_entries_;
     std::map<std::string, SoccerEntry>::iterator
@@ -221,10 +222,13 @@ inline void SoccerList::search_display_current_entry() const
 {
     if (search_results_.empty())
         return;
+    std::string s = " players found";
+    if (search_results_.size() == 1)
+        s = " player found";
     std::cout << itr_search_current_entry_->second;
-    std::cout << std::endl << "    Player "
-         << search_rank_location_ << " of " << search_results_.size() << std::endl;
-
+    std::cout << std::endl << "    Showing "
+         << search_rank_location_ << " of " <<
+         search_results_.size() << s  << std::endl;
 }
 
 

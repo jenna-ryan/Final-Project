@@ -338,6 +338,7 @@ bool SoccerList::find()
     }
     else{
         itr_search_current_entry_ = search_results_.begin();
+        search_rank_location_ = 1;
         return 1;
     }
 }

@@ -36,8 +36,12 @@ void SoccerProg::search_run(bool & done){
 void SoccerProg::display_entry_and_menu() const {
     string long_separator(50, '-');
     string short_separator(8, '-');
+    string sp(6, ' ');
 
     system(clear_command);
+
+    cout << sp << entry_list_.season_ << " Season"
+        << endl << long_separator << endl;
 
     entry_list_.display_current_entry();
 
@@ -53,8 +57,12 @@ void SoccerProg::display_entry_and_menu() const {
 void SoccerProg::search_display_entry_and_menu() const {
     string long_separator(50, '-');
     string short_separator(8, '-');
+    string sp(6, ' ');
 
     system(clear_command);
+
+    cout << sp << entry_list_.season_ << " Season"
+        << endl << long_separator << endl;
 
     entry_list_.search_display_current_entry();
 
@@ -126,6 +134,7 @@ void SoccerProg::execute(char command, bool & done)
 		    cout << "Enter file name to save information to:";
 		    cin >> printFilename;
 		    entry_list_.print_to_file(printFilename);
+		    entry_list_.set_message(("Saved to " + printFilename));
 
 			break;
 		}
