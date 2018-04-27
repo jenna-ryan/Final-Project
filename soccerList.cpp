@@ -14,6 +14,7 @@ using std::pair;
 #include <string>
 using std::string;
 #include<vector>
+#include<sstream>
 
 int SoccerList::compute_category(int yob)
 {
@@ -137,81 +138,152 @@ void SoccerList::print_to_file(const std::string & file_name) const
 
 void SoccerList::print_searches(const std::string & file_name) const
 {
-/// search results should be saved in a  new search map (member of class) so that one can just iterate through the map
-/// clear map when return command is executed
+
+
+    ofstream out(file_name);
+    ///FOR SOME REASON DOESN'T FAIL
+    while(out.fail())
+    {
+        cout << "Unable to write to file chosen, please enter different filename: ";
+        string fn;
+        cin >> fn;
+        out.open(fn);
+    }
+
+    for(auto itr = search_results_.begin(); itr != search_results_.end(); itr++)
+            out << itr->second << endl;
+
 
 }
 
-
-bool SoccerList::find(const std::string & search_term, int type)
+bool SoccerList::find()
 {
-	switch (type) {
-		case 1 : {
-			auto itr = m_entries_.find(search_term);
-			if (itr != m_entries_.end()){
-				itr_current_entry_ = itr;
-				return 1;
+    cout << "Enter '-1' to leave field unsearched" << std::endl;
+            cout << "last name: ";
+            string lastName;
+            getline(cin, lastName);
+			cout << "Enter '-1' to leave field unsearched" << std::endl;
+            cout << "first name: ";
+            string firstName;
+            getline(cin, firstName);
+			cout << "Enter '-1' to leave field unsearched" << std::endl;
+            cout << "payment status(1 for paid, 0 for unpaid): ";
+            int status;
+            cin >> status;
+			bool valid = false;
+			int yob;
+            string junk;
+            getline(cin, junk); //
+			while(!valid){
+				cout << "Enter '-1' to leave field unsearched" << std::endl;
+    	        cout << "year of birth: ";
+        	    string yob_ss;
+            	getline(cin, yob_ss);
+				std::stringstream ss(yob_ss);
+				ss >> yob;
+				if(ss.eof())
+					valid = true;
 			}
-			itr = m_entries_.lower_bound(search_term);
-			if (itr != m_entries_.end()){
-				if( itr->first[search_term.size() - 1] == search_term[search_term.size() - 1])
-					itr_current_entry_ = itr;
-				return 1;
-			}
-			return 0;
-		}
-		case 2 : {
-			for(auto itr = m_entries_.begin(); itr != m_entries_.end(); ++itr){
-				if(itr->second.firstName == search_term){
-					itr_current_entry_ = itr;
-					return 1;
-				}
-			}
-			return 0;
-		}
-		case 3 : {
-			bool correctState;
-			if(search_term == "Paid" || search_term == "paid")
-				correctState = 1;
-			if(search_term == "Unpaid" || search_term == "unpaid")
-				correctState = 0;
-			for(auto itr = m_entries_.begin(); itr != m_entries_.end(); ++itr){
-				if(itr->second.status == correctState){
-					itr_current_entry_ = itr;
-					return 1;
-				}
-			}
-			return 0;
-		}
-	}
-	return 0;
-}
+			cout << "Enter '-1' to leave field unsearched" << std::endl;
+            cout << "category: U";
+            int category;
+			std::cin >> category;
 
-bool SoccerList::find(int search_term, int type)
-{
-	switch (type) {
-		case 1 : {
-			for(auto itr = m_entries_.begin(); itr != m_entries_.end(); ++itr){
-				if(itr->second.yob == search_term){
-					itr_current_entry_ = itr;
-					return 1;
-				}
-			}
-			return 0;
+    std::map<std::string, SoccerEntry> temp;
 
-		}
-		case 2 : {
-			for(auto itr = m_entries_.begin(); itr != m_entries_.end(); ++itr){
-				if(itr->second.category == search_term){
-					itr_current_entry_ = itr;
-					return 1;
-				}
-			}
-			return 0;
+    if(lastName != "-1")
+    {
+        auto itr = m_entries_.lower_bound(lastName);    //entry not found
+        if(itr == m_entries_.end())
+            return 0;
 
-		}
-	}
-	return 0;
+        for(itr; itr != m_entries_.end(); ++itr)
+        {
+            std::string substrName = itr->second.lastName.substr(0,lastName.size());
+            if(substrName == lastName)
+            {
+                temp.insert({itr->first, itr->second});
+            }
+        }
+    }
+    else
+    {
+        temp = m_entries_;   ///will this create deep copy or shallow copy?
+    }
+    search_results_ = temp;
+
+        if(firstName != "-1")
+        {
+            temp.clear();
+            for(auto itr = search_results_.begin(); itr != search_results_.end(); ++itr)
+            {
+                if(itr->second.firstName == firstName)
+                {
+                    temp.insert(*itr);
+
+                }
+            }
+
+        }
+
+    search_results_ = temp;
+
+        if(yob != -1)
+        {
+            temp.clear();
+            for(auto itr = search_results_.begin(); itr != search_results_.end(); ++itr)
+            {
+                if(itr->second.yob == yob)
+                {
+                    temp.insert(*itr);
+                }
+            }
+        }
+
+    search_results_ = temp;
+
+        if(status != -1)
+        {
+            temp.clear();
+            bool boolStatus;
+            if(status == 0)
+                boolStatus = false;
+            else if(status == 1)
+                boolStatus = true;
+            else
+                return 0;
+
+            for(auto itr = search_results_.begin(); itr != search_results_.end(); ++itr)
+            {
+                if((itr->second).status == boolStatus)
+                {
+                    temp.insert(*itr);
+                }
+            }
+        }
+
+    search_results_ = temp;
+
+        if(category != -1)
+        {
+            temp.clear();
+            for(auto itr = search_results_.begin(); itr != search_results_.end(); ++itr)
+            {
+                if((itr->second).category == category)
+                {
+                    temp.insert(*itr);
+                }
+            }
+        }
+
+    search_results_ = temp;
+
+    if(search_results_.empty())
+        return 0;
+    else{
+        itr_search_current_entry_ = search_results_.begin();
+        return 1;
+    }
 }
 
 void SoccerList::disp_stats()

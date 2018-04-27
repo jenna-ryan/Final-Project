@@ -13,13 +13,15 @@ public:
     SoccerList() : itr_current_entry_(m_entries_.end()) {}
 
     void display_current_entry() const;
+    void search_display_current_entry() const;
     void move_to_next();
     void move_to_previous();
+    void next_search();
+    void previous_search();
     void add(const std::string & firstName, const std::string & lastName, int yob, bool status);
     void delete_player();
     void edit_current();
-	bool find(const std::string & search_term, int type);
-	bool find(int search_term, int type);
+    bool find();
     bool empty() const { return m_entries_.empty(); }
     void read_file(const std::string & file_name);
     void write_file(const std::string & file_name) const;
@@ -30,15 +32,29 @@ public:
     void new_season(int year){
         m_entries_.clear();
         season_ = year;};
+    void clear_searches();
 
 private:
+    int season_;
+
     std::map<std::string, SoccerEntry> m_entries_;
     std::map<std::string, SoccerEntry>::iterator
         itr_current_entry_;
-    int season_;
     int rank_location_ = 1;
+
     std::map<std::string, SoccerEntry> search_results_;
+    std::map<std::string, SoccerEntry>::iterator
+        itr_search_current_entry_;
+    int search_rank_location_ = 1;
 };
+
+inline void SoccerList::clear_searches()
+    {
+        search_rank_location_ = 1;
+        search_results_.clear();
+        itr_search_current_entry_ = search_results_.begin();
+    }
+
 
 inline void SoccerList::delete_player()
 {
@@ -98,4 +114,46 @@ inline void SoccerList::move_to_previous()
     if(rank_location_ == 0)
         rank_location_ = m_entries_.size();
 }
+
+///%%%%%%%%% SEARCH
+
+inline void SoccerList::next_search()
+{
+    if (search_results_.empty())
+        return;
+    ++itr_search_current_entry_;
+    if (itr_search_current_entry_ == search_results_.end())
+        itr_search_current_entry_ = search_results_.begin();
+    ++search_rank_location_;
+    if(search_rank_location_ > search_results_.size())
+        search_rank_location_ = 1;
+}
+
+inline void SoccerList::previous_search()
+{
+    if (search_results_.empty())
+        return;
+    --itr_search_current_entry_;
+    if (itr_search_current_entry_ == --search_results_.begin())
+        itr_search_current_entry_ = --search_results_.end();
+    --search_rank_location_;
+    if(search_rank_location_ <= 0)
+        search_rank_location_ = search_results_.size();
+}
+/// SEARCH
+
+
+inline void SoccerList::search_display_current_entry() const
+{
+    if (search_results_.empty())
+        return;
+    std::cout << itr_search_current_entry_->second;
+    std::cout << std::endl << "    Player "
+         << search_rank_location_ << " of " << search_results_.size() << std::endl;
+
+}
+
+
+
+
 

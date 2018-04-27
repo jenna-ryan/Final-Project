@@ -53,10 +53,10 @@ void SoccerProg::search_display_entry_and_menu() const {
 
     system(clear_command);
 
-    entry_list_.display_current_entry();
+    entry_list_.search_display_current_entry();
 
     cout << long_separator << endl
-         << "  next      edit    add        return\n"
+         << "  next      edit    add        return  search\n"
          << "  previous  delete  print(z)   quit\n"
          << short_separator << endl;
 }
@@ -81,62 +81,16 @@ void SoccerProg::execute(char command, bool & done)
             break;
         }
         case 's': {
-            cout << "Enter '*' to leave field unsearched" << std::endl;
-            cout << "last name: ";
-            string lastName;
-            getline(cin, lastName);
-			cout << "Enter '*' to leave field unsearched" << std::endl;
-            cout << "first name: ";
-            string firstName;
-            getline(cin, firstName);
-			cout << "Enter '*' to leave field unsearched" << std::endl;
-            cout << "payment status(paid or unpaid): ";
-            string status;
-            getline(cin, status);
-			bool valid = false;
-			int yob;
-			while(!valid){
-				cout << "Enter '-1' to leave field unsearched" << std::endl;
-    	        cout << "year of birth: ";
-        	    string yob_ss;
-            	getline(cin, yob_ss);
-				std::stringstream ss(yob_ss);
-				ss >> yob;
-				if(ss.eof())
-					valid = true;
-			}
-			cout << "Enter '-1' to leave field unsearched" << std::endl;
-            cout << "category: U";
-            int category;
-			std::cin >> category;
-			if(lastName != "*"){
-	            if(entry_list_.find(lastName, 1))
-					search_run(done);
-				break;
-			}
-			if(firstName != "*"){
-	            if(entry_list_.find(firstName, 2))
-					search_run(done);
-				break;
-			}
-			if(status != "*"){
-	            if(entry_list_.find(status, 3))
-					search_run(done);
-				break;
-			}
-			if(yob != -1){
-	            if(entry_list_.find(yob, 1))
-					search_run(done);
-				break;
-			}
-			if(category != -1){
-	            if(entry_list_.find(category, 2))
-					search_run(done);
-				break;
-			}
+
+			bool found = entry_list_.find();
+
+			if(!found)
+                cout << "Entry not found." << endl;
+            else
+                search_run(done);
+
             break;
         }
-///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
         case 'a': {
             cout << "first name: ";
             string first_name;
@@ -153,7 +107,6 @@ void SoccerProg::execute(char command, bool & done)
             entry_list_.add(first_name, last_name, new_yob, new_status);
             break;
         }
-///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
         case 'd': {
             cout << "Are you sure you want to delete this player? (y/n) ";
             char choice;
@@ -199,26 +152,25 @@ void SoccerProg::execute(char command, bool & done)
     }
 }
 
+///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&      SEARCH     &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
+
 void SoccerProg::search_execute(char command, bool & done, bool & really_done)
 {
     switch (command) {
         case 'n': {
-            entry_list_.move_to_next();
+            entry_list_.next_search();
             break;
          }
-///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
         case 'p': {
-            entry_list_.move_to_previous();
+            entry_list_.previous_search();
             break;
          }
-///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
         case 'e': {
             if (entry_list_.empty())
                 return;
             entry_list_.edit_current();
             break;
         }
-///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
         case 'a': {
             cout << "first name: ";
             string first_name;
@@ -235,13 +187,12 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             entry_list_.add(first_name, last_name, new_yob, new_status);
             break;
         }
-///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
         case 'd': {
             // Not yet implemented
+            //anything added to search_results_ must also be added to m_entries_
             break;
         }
 		case 'z': {
-
             string printFilename;
 		    cout << "Enter file name to save information to:";
 		    cin >> printFilename;
@@ -249,7 +200,7 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
 			break;
 		}
 		case 'r': {
-
+            entry_list_.clear_searches();
             done = true;
 			break;
 		}
@@ -257,6 +208,17 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             entry_list_.write_file(cs_file_name);
             done = true;
 			really_done = true;
+            break;
+        }
+        case 's': {
+
+			bool found = entry_list_.find();
+
+			if(!found)
+                cout << "Entry not found." << endl;
+            else
+                search_run(done);
+
             break;
         }
     }
