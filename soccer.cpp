@@ -2,6 +2,7 @@
 // soccer.cpp
 
 #include "soccer.h"
+#include<sstream>
 
 using namespace std;
 
@@ -104,6 +105,8 @@ void SoccerProg::execute(char command, bool & done)
             break;
         }
         case 'a': {
+            string s;
+            stringstream ss;
             cout << "first name: ";
             string first_name;
             getline(cin, first_name);

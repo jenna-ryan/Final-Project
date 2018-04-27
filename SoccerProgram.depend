@@ -30,8 +30,9 @@
 1524765123 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 computer science ii\soccerproject1039\soccer.cpp
 	"soccer.h"
 
-1524872659 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccer.cpp
+1524874309 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccer.cpp
 	"soccer.h"
+	<sstream>
 
 1524858520 c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccer.h
 	<fstream>
@@ -54,7 +55,7 @@
 1524805839 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\test.cpp
 	"soccer.h"
 
-1524871764 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccerlist.cpp
+1524873053 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccerlist.cpp
 	"soccerList.h"
 	<fstream>
 	<iostream>
