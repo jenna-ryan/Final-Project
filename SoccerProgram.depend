@@ -30,3 +30,34 @@
 1524765123 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 computer science ii\soccerproject1039\soccer.cpp
 	"soccer.h"
 
+1524765123 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccer.cpp
+	"soccer.h"
+
+1524757207 c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccer.h
+	<fstream>
+	<iostream>
+	<map>
+	<string>
+	<sstream>
+	"soccerList.h"
+
+1524802535 c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccerlist.h
+	<iostream>
+	<map>
+	<string>
+	"soccerEntry.h"
+
+1524776138 c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccerentry.h
+	<fstream>
+	<string>
+
+1524759788 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\test.cpp
+	"soccer.h"
+
+1524802535 source:c:\users\jenna\documents\clarkson\s18 classes\cs142 final project\final project\soccerlist.cpp
+	"soccerList.h"
+	<fstream>
+	<iostream>
+	<map>
+	<string>
+

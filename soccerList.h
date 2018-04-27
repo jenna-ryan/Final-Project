@@ -26,25 +26,27 @@ public:
     void print_to_file(const std::string & file_name) const;
     void print_searches(const std::string & file_name) const;
     void disp_stats();
+    int compute_category(int yob);
 
 private:
     std::map<std::string, PhoneBookEntry> m_entries_;
     std::map<std::string, PhoneBookEntry>::iterator
         itr_current_entry_;
+    int season_;
 };
 
 inline void PhoneBookList::add(const std::string & firstName, const std::string & lastName, int yob, bool status)
 {
     ///NOTE: changed cin to be yob, not category
-    ///ALSO-- 2018 should be gotten from season, should store season in class
-    int category = 2018-yob;
+    int category = season_-yob;
     while (category<4 || category>16)
     {
         std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
         std::cout << "Please reenter the year of birth: " << std::endl;
         std::cin >> yob;
-        category = 2018 - yob;
+        category = season_ - yob;
     }
+    category = compute_category(yob);
     auto result =
         m_entries_.insert({lastName, PhoneBookEntry(firstName, lastName, yob, status, category)});
     itr_current_entry_ = result.first;
@@ -77,8 +79,8 @@ inline void PhoneBookList::move_to_previous()
     if (m_entries_.empty())
         return;
     --itr_current_entry_;
-    if (itr_current_entry_ == m_entries_.begin() - 1)
-        itr_current_entry_ = m_entries_.end() - 1;
+    if (itr_current_entry_ == --m_entries_.begin())
+        itr_current_entry_ = --m_entries_.end();
 }
 
 
@@ -107,13 +109,13 @@ inline void PhoneBookList::edit_current()
 
         if(newYear!= -1)
         {
-            int category = 2018 - newYear;
+            int category = season_ - newYear;
             while(category < 4 || category > 16)
             {
                 std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
                 std::cout << "Please reenter the year of birth: " << std::endl;
                 std::cin >> newYear;
-                category = 2018 - newYear;
+                category = season_ - newYear;
             }
 
             (itr_current_entry_->second).yob = newYear;

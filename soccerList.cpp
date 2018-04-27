@@ -14,11 +14,30 @@ using std::pair;
 #include <string>
 using std::string;
 
+int PhoneBookList::compute_category(int yob)
+{
+    int age = season_ - yob;
+    if(age == 4 || age == 5 || age == 6)
+        return 6;
+    else if(age == 7 || age == 8)
+        return 8;
+    else if(age == 9 || age == 10)
+        return 10;
+    else if(age == 11 || age == 12)
+        return 12;
+    else if(age == 13 || age == 14)
+        return 14;
+    else if(age == 15 || age == 16 || age == 17)
+        return 17;
+}
+
 void PhoneBookList::read_file(const std::string & file_name)
 {
     ifstream ifs(file_name);
     if (!ifs) // no file -- one will be created when write_file is called
         return;
+
+    ifs >> season_;
 
     int num_entries;
     ifs >> num_entries;

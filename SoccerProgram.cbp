@@ -31,6 +31,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="SoccerProgram.cbp" />
+		<Unit filename="soccer.cpp" />
+		<Unit filename="soccer.h" />
+		<Unit filename="soccerEntry.h" />
+		<Unit filename="soccerList.cpp" />
+		<Unit filename="soccerList.h" />
+		<Unit filename="test.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
