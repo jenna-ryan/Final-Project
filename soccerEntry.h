@@ -1,24 +1,24 @@
 
 // soccerEntry.h
 
-#ifndef _PhoneBookEntry_h_
-#define _PhoneBookEntry_h_
+#ifndef _SoccerEntry_h_
+#define _SoccerEntry_h_
 
 #include <fstream>
 #include <string>
 
-class PhoneBookEntry
+class SoccerEntry
 {
 public:
-    PhoneBookEntry() : firstName("no name"), lastName("no name"),
+    SoccerEntry() : firstName("no name"), lastName("no name"),
 	   	yob(0), status(0), category(0) {}
 
-    PhoneBookEntry(const std::string & firstName0, const std::string & lastName0,
+    SoccerEntry(const std::string & firstName0, const std::string & lastName0,
 		int yob0, bool status0, int category0) :
         firstName(firstName0), lastName(lastName0),
 		yob(yob0), status(status0), category(category0) {}
 
-    void print_raw( std::ofstream & out, const PhoneBookEntry & e);
+    void print_raw( std::ofstream & out, const SoccerEntry & e);
 
     std::string firstName;
 	std::string lastName;
@@ -27,7 +27,7 @@ public:
 	int category;
 };
 
-inline void print_raw( std::ofstream & out, const PhoneBookEntry & e)
+inline void print_raw( std::ofstream & out, const SoccerEntry & e)
 {
     out << e.firstName << std::endl << e.lastName << std::endl << e.yob << std::endl;
 	if(e.status == 1)
@@ -38,7 +38,7 @@ inline void print_raw( std::ofstream & out, const PhoneBookEntry & e)
 }
 
 inline std::istream & operator>>(std::istream & in,
-                                 PhoneBookEntry & e)
+                                 SoccerEntry & e)
 {
     getline(in, e.firstName);
     getline(in, e.lastName);
@@ -48,7 +48,7 @@ inline std::istream & operator>>(std::istream & in,
 }
 
 inline std::ostream & operator<<(std::ostream & out,
-                                 const PhoneBookEntry & e)
+                                 const SoccerEntry & e)
 {
     out << e.firstName << ' ' << e.lastName << std::endl << e.yob << std::endl;
 	if(e.status == 1)

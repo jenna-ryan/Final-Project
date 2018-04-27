@@ -32,12 +32,12 @@ public:
         season_ = year;};
 
 private:
-    std::map<std::string, PhoneBookEntry> m_entries_;
-    std::map<std::string, PhoneBookEntry>::iterator
+    std::map<std::string, SoccerEntry> m_entries_;
+    std::map<std::string, SoccerEntry>::iterator
         itr_current_entry_;
     int season_;
     int rank_location_ = 1;
-    std::map<std::string, PhoneBookEntry> search_results_;
+    std::map<std::string, SoccerEntry> search_results_;
 };
 
 inline void SoccerList::delete_player()
@@ -62,7 +62,7 @@ inline void SoccerList::add(const std::string & firstName, const std::string & l
     }
     category = compute_category(yob);
     auto result =
-        m_entries_.insert({lastName, PhoneBookEntry(firstName, lastName, yob, status, category)});
+        m_entries_.insert({lastName, SoccerEntry(firstName, lastName, yob, status, category)});
     itr_current_entry_ = result.first;
 }
 
@@ -71,7 +71,8 @@ inline void SoccerList::display_current_entry() const
     if (m_entries_.empty())
         return;
     std::cout << itr_current_entry_->second;
-    std::cout << "      Player " << rank_location_ << " of " << m_entries_.size() << std::endl;
+    std::cout << std::endl << "    Player "
+         << rank_location_ << " of " << m_entries_.size() << std::endl;
 }
 
 inline void SoccerList::move_to_next()
@@ -99,49 +100,50 @@ inline void SoccerList::move_to_previous()
 }
 
 
-inline void SoccerList::edit_current()
-{
-    std::string newName;
-    int newYear;
-    int newStatus;
 
-    std::cout << "To change a player's information, enter new info below\n";
-    std::cout << "To leave a field unchanged, enter -1\n";
-
-    std::cout << "Change first name? ";
-    std::cin >> newName;
-    if(newName!= "-1")
-        (itr_current_entry_->second).firstName = newName;
-
-    std::cout << "Change last name? ";
-    std::cin >> newName;
-        if(newName!= "-1")
-        (itr_current_entry_->second).lastName = newName;
-
-    std::cout << "Change birth year? ";
-    std::cin >> newYear;
-
-
-        if(newYear!= -1)
-        {
-            int category = season_ - newYear;
-            while(category < 4 || category > 16)
-            {
-                std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
-                std::cout << "Please reenter the year of birth: " << std::endl;
-                std::cin >> newYear;
-                category = season_ - newYear;
-            }
-
-            (itr_current_entry_->second).yob = newYear;
-            (itr_current_entry_->second).category = category;
-        }
-
-    std::cout << "Change registration status? ";
-    std::cin >> newStatus;
-        if(newStatus == 1)
-            (itr_current_entry_->second).status = true;
-        else if (newStatus == 0)
-            (itr_current_entry_->second).status = false;
-
-}
+//inline void SoccerList::edit_current()
+//{
+//    std::string newName;
+//    int newYear;
+//    int newStatus;
+//
+//    std::cout << "To change a player's information, enter new info below\n";
+//    std::cout << "To leave a field unchanged, enter -1\n";
+//
+//    std::cout << "Change first name? ";
+//    std::cin >> newName;
+//    if(newName!= "-1")
+//        (itr_current_entry_->second).firstName = newName;
+//
+//    std::cout << "Change last name? ";
+//    std::cin >> newName;
+//        if(newName!= "-1")
+//        (itr_current_entry_->second).lastName = newName;
+//
+//    std::cout << "Change birth year? ";
+//    std::cin >> newYear;
+//
+//
+//        if(newYear!= -1)
+//        {
+//            int category = season_ - newYear;
+//            while(category < 4 || category > 16)
+//            {
+//                std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
+//                std::cout << "Please reenter the year of birth: " << std::endl;
+//                std::cin >> newYear;
+//                category = season_ - newYear;
+//            }
+//
+//            (itr_current_entry_->second).yob = newYear;
+//            (itr_current_entry_->second).category = category;
+//        }
+//
+//    std::cout << "Change registration status? ";
+//    std::cin >> newStatus;
+//        if(newStatus == 1)
+//            (itr_current_entry_->second).status = true;
+//        else if (newStatus == 0)
+//            (itr_current_entry_->second).status = false;
+//
+//}

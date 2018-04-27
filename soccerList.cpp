@@ -32,6 +32,59 @@ int SoccerList::compute_category(int yob)
         return 17;
 }
 
+void SoccerList::edit_current()
+{
+    std::string sep(25, '-');
+
+    std::cout << sep << std::endl;
+    std::cout << "What would you like to change?\n"
+         << "   first name (f)\n"
+         << "   last name(l)\n"
+         << "   year of birth (y)\n"
+         << "   registration status (r)\n" << std::endl;
+
+    char com;
+    std::cin >> com;
+    switch (com) {
+        case 'f':
+        {
+            std::cout << "Enter new first name: ";
+            std::cin >> (itr_current_entry_->second).firstName;
+            break;
+        }
+
+        case 'l':
+        {
+            std::cout << "Enter new last name: ";
+            std::cin >> (itr_current_entry_->second).lastName;
+            break;
+        }
+        case 'y':
+        {
+            std::cout << "Enter new birth year: ";
+            int newYear;
+            std::cin >> newYear;
+            int category = season_ - newYear;
+            while(category < 4 || category > 16)
+            {
+                std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
+                std::cout << "Please reenter new year of birth: " << std::endl;
+                std::cin >> newYear;
+                category = season_ - newYear;
+            }
+            (itr_current_entry_->second).yob = newYear;
+            (itr_current_entry_->second).category = category;
+            break;
+        }
+        case 'r':
+        {
+            std::cout << "Enter new status (1 for paid, 0 for unpaid): ";
+            std::cin >> (itr_current_entry_->second).status;
+             break;
+        }
+    }
+}
+
 void SoccerList::read_file(const std::string & file_name)
 {
     ifstream ifs(file_name);
@@ -44,7 +97,7 @@ void SoccerList::read_file(const std::string & file_name)
     ifs >> num_entries;
     ifs.get(); // \n
     for (int i = 0; i < num_entries; i++) {
-        PhoneBookEntry new_entry;
+        SoccerEntry new_entry;
         ifs >> new_entry;
         // m_entries[new_entry.name] = new_entry;
         m_entries_.insert(m_entries_.end(),
