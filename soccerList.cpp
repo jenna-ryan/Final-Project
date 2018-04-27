@@ -13,6 +13,7 @@ using std::endl;
 using std::pair;
 #include <string>
 using std::string;
+#include<vector>
 
 int SoccerList::compute_category(int yob)
 {
@@ -162,19 +163,32 @@ bool SoccerList::find(int search_term, int type)
 
 void SoccerList::disp_stats()
 {
-    int numPaid = 0;
+    pair<int,int> catCount[18] = {{0,0}};   //first stores total, second stores paid
 
     for(auto itr = m_entries_.begin(); itr != m_entries_.end(); ++itr)
     {
+        ++catCount[0].first;
+        ++catCount[(itr->second).category].first;
         if((itr->second).status == 1)
         {
-            numPaid++;
+            ++catCount[0].second;
+            ++catCount[(itr->second).category].second;
         }
+
     }
 
-    cout << "Number of players: " << m_entries_.size() << endl;
-    cout << "Paid players:  " << numPaid << endl;
-    cout << "Unpaid players: " << m_entries_.size() - numPaid << endl << endl;
+    cout << "Players: " << catCount[0].first << endl;
+    cout << "   Paid: " << catCount[0].second << endl;
+    cout << "   Unpaid: " << catCount[0].first - catCount[0].second << endl;
+
+    std::vector<int> v{6, 8, 10, 12, 14, 17};
+    for(auto itr = v.begin(); itr != v.end(); ++itr)
+    {
+        cout << 'U' << *itr << endl;
+        cout << "Players: " << catCount[*itr].first << endl;
+        cout << "   Paid: " << catCount[*itr].second << endl;
+        cout << "   Unpaid: " << catCount[*itr].first - catCount[*itr].second << endl;
+    }
 
     cout << "Press enter to return" << endl;
     cin.get();
