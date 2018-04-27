@@ -114,12 +114,33 @@ void SoccerProg::execute(char command, bool & done)
             string last_name;
             getline(cin, last_name);
             last_name = entry_list_.last_name_check(last_name);
-            cout << "year of birth: ";
-            int new_yob;
-            cin >> new_yob;
-            cout << "registration status, 1 for paid and 0 for unpaid: ";
+
+            bool valid = false;
+			int new_yob;
+			while(!valid)
+            {
+    	        cout << "year of birth: ";
+        	    string yob_ss;
+            	getline(cin, yob_ss);
+				std::stringstream ss(yob_ss);
+				ss >> new_yob;
+				if(ss.eof())
+					valid = true;
+			}
+
+            valid = false;
             bool new_status;
-            cin >> new_status;
+			while(!valid)
+            {
+                cout << "registration status, 1 for paid and 0 for unpaid: ";
+        	    string status_ss;
+            	getline(cin, status_ss);
+				std::stringstream ss(status_ss);
+				ss >> new_status;
+				if(ss.eof())
+					valid = true;
+			}
+
             entry_list_.add(first_name, last_name, new_yob, new_status);
             break;
         }
@@ -202,12 +223,33 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             string last_name;
             getline(cin, last_name);
             last_name = entry_list_.last_name_check(last_name);
-            cout << "year of birth: ";
-            int new_yob;
-            cin >> new_yob;
-            cout << "registration status, paid for 1 and unpaid for 0: ";
+
+
+                        bool valid = false;
+			int new_yob;
+			while(!valid)
+            {
+    	        cout << "year of birth: ";
+        	    string yob_ss;
+            	getline(cin, yob_ss);
+				std::stringstream ss(yob_ss);
+				ss >> new_yob;
+				if(ss.eof())
+					valid = true;
+			}
+
+            valid = false;
             bool new_status;
-            cin >> new_status;
+			while(!valid)
+            {
+                cout << "registration status, 1 for paid and 0 for unpaid: ";
+        	    string status_ss;
+            	getline(cin, status_ss);
+				std::stringstream ss(status_ss);
+				ss >> new_status;
+				if(ss.eof())
+					valid = true;
+			}
             entry_list_.add(first_name, last_name, new_yob, new_status);
             entry_list_.add_search();
             break;
