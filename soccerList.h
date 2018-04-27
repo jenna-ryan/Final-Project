@@ -7,10 +7,10 @@
 
 #include "soccerEntry.h"
 
-class PhoneBookList
+class SoccerList
 {
 public:
-    PhoneBookList() : itr_current_entry_(m_entries_.end()) {}
+    SoccerList() : itr_current_entry_(m_entries_.end()) {}
 
     void display_current_entry() const;
     void move_to_next();
@@ -38,7 +38,7 @@ private:
     int season_;
 };
 
-inline void PhoneBookList::delete_player()
+inline void SoccerList::delete_player()
 {
     if( m_entries_.empty())
         return;
@@ -47,7 +47,7 @@ inline void PhoneBookList::delete_player()
     m_entries_.erase(toDel);
 }
 
-inline void PhoneBookList::add(const std::string & firstName, const std::string & lastName, int yob, bool status)
+inline void SoccerList::add(const std::string & firstName, const std::string & lastName, int yob, bool status)
 {
     ///NOTE: changed cin to be yob, not category
     int category = season_-yob;
@@ -64,14 +64,14 @@ inline void PhoneBookList::add(const std::string & firstName, const std::string 
     itr_current_entry_ = result.first;
 }
 
-inline void PhoneBookList::display_current_entry() const
+inline void SoccerList::display_current_entry() const
 {
     if (m_entries_.empty())
         return;
     std::cout << itr_current_entry_->second;
 }
 
-inline void PhoneBookList::move_to_next()
+inline void SoccerList::move_to_next()
 {
     if (m_entries_.empty())
         return;
@@ -80,7 +80,7 @@ inline void PhoneBookList::move_to_next()
         itr_current_entry_ = m_entries_.begin();
 }
 
-inline void PhoneBookList::move_to_previous()
+inline void SoccerList::move_to_previous()
 {
     if (m_entries_.empty())
         return;
@@ -90,7 +90,7 @@ inline void PhoneBookList::move_to_previous()
 }
 
 
-inline void PhoneBookList::edit_current()
+inline void SoccerList::edit_current()
 {
     std::string newName;
     int newYear;

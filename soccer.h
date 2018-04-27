@@ -1,8 +1,8 @@
 
 // soccer.h
 
-#ifndef _PhoneBookList_h_
-#define _PhoneBookList_h_
+#ifndef _SoccerList_h_
+#define _SoccerList_h_
 
 #include <fstream>
 #include <iostream>
@@ -16,7 +16,7 @@ const char clear_command[] = "cls";
 
 const char cs_file_name[] = "soccer.txt";
 
-class PhoneBook
+class SoccerProg
 {
 public:
     void run();
@@ -27,7 +27,7 @@ private:
     void search_display_entry_and_menu() const;
     void execute(char command, bool & done);
     void search_execute(char command, bool & done, bool & really_done);
-    PhoneBookList entry_list_;
+    SoccerList entry_list_;
 
 };
 

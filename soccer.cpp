@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void PhoneBook::run()
+void SoccerProg::run()
 {
     entry_list_.read_file(cs_file_name);
     bool done = false;
@@ -20,7 +20,7 @@ void PhoneBook::run()
     }
 }
 
-void PhoneBook::search_run(bool & done){
+void SoccerProg::search_run(bool & done){
 	bool search_done = 0;
 	while (!search_done) {
     	search_display_entry_and_menu();
@@ -33,7 +33,7 @@ void PhoneBook::search_run(bool & done){
 	}
 }
 
-void PhoneBook::display_entry_and_menu() const {
+void SoccerProg::display_entry_and_menu() const {
     string long_separator(50, '-');
     string short_separator(8, '-');
 
@@ -47,7 +47,7 @@ void PhoneBook::display_entry_and_menu() const {
          << short_separator << endl;
 }
 
-void PhoneBook::search_display_entry_and_menu() const {
+void SoccerProg::search_display_entry_and_menu() const {
     string long_separator(50, '-');
     string short_separator(8, '-');
 
@@ -61,7 +61,7 @@ void PhoneBook::search_display_entry_and_menu() const {
          << short_separator << endl;
 }
 
-void PhoneBook::execute(char command, bool & done)
+void SoccerProg::execute(char command, bool & done)
 {
     switch (command) {
         case 'n': {
@@ -199,7 +199,7 @@ void PhoneBook::execute(char command, bool & done)
     }
 }
 
-void PhoneBook::search_execute(char command, bool & done, bool & really_done)
+void SoccerProg::search_execute(char command, bool & done, bool & really_done)
 {
     switch (command) {
         case 'n': {

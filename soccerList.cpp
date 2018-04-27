@@ -14,7 +14,7 @@ using std::pair;
 #include <string>
 using std::string;
 
-int PhoneBookList::compute_category(int yob)
+int SoccerList::compute_category(int yob)
 {
     int age = season_ - yob;
     if(age == 4 || age == 5 || age == 6)
@@ -31,7 +31,7 @@ int PhoneBookList::compute_category(int yob)
         return 17;
 }
 
-void PhoneBookList::read_file(const std::string & file_name)
+void SoccerList::read_file(const std::string & file_name)
 {
     ifstream ifs(file_name);
     if (!ifs) // no file -- one will be created when write_file is called
@@ -52,7 +52,7 @@ void PhoneBookList::read_file(const std::string & file_name)
     itr_current_entry_ = m_entries_.begin();
 }
 
-void PhoneBookList::write_file(const std::string & file_name) const
+void SoccerList::write_file(const std::string & file_name) const
 {
     ofstream out(file_name);
     cout << "PLAYER INFORMATION SAVED\n";
@@ -64,7 +64,7 @@ void PhoneBookList::write_file(const std::string & file_name) const
     }
 }
 
-void PhoneBookList::print_to_file(const std::string & file_name) const
+void SoccerList::print_to_file(const std::string & file_name) const
 {
     ofstream out(file_name);
     ///FOR SOME REASON DOESN'T FAIL
@@ -81,7 +81,7 @@ void PhoneBookList::print_to_file(const std::string & file_name) const
 
 }
 
-void PhoneBookList::print_searches(const std::string & file_name) const
+void SoccerList::print_searches(const std::string & file_name) const
 {
 /// search results should be saved in a  new search map (member of class) so that one can just iterate through the map
 /// clear map when return command is executed
@@ -89,7 +89,7 @@ void PhoneBookList::print_searches(const std::string & file_name) const
 }
 
 
-bool PhoneBookList::find(const std::string & search_term, int type)
+bool SoccerList::find(const std::string & search_term, int type)
 {
 	switch (type) {
 		case 1 : {
@@ -133,7 +133,7 @@ bool PhoneBookList::find(const std::string & search_term, int type)
 	return 0;
 }
 
-bool PhoneBookList::find(int search_term, int type)
+bool SoccerList::find(int search_term, int type)
 {
 	switch (type) {
 		case 1 : {
@@ -160,7 +160,7 @@ bool PhoneBookList::find(int search_term, int type)
 	return 0;
 }
 
-void PhoneBookList::disp_stats()
+void SoccerList::disp_stats()
 {
     int numPaid = 0;
 
