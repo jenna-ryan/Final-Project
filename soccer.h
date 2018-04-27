@@ -28,7 +28,6 @@ private:
     void execute(char command, bool & done);
     void search_execute(char command, bool & done, bool & really_done);
     SoccerList entry_list_;
-
 };
 
 #endif

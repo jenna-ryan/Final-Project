@@ -45,6 +45,7 @@ void SoccerProg::display_entry_and_menu() const {
          << "  next      search  edit    quit      display stats(t)\n"
          << "  previous  add     delete  print(z)  new season(r)\n"
          << short_separator << endl;
+
 }
 
 void SoccerProg::search_display_entry_and_menu() const {

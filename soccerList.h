@@ -99,6 +99,9 @@ inline void SoccerList::add(const std::string & firstName, const std::string & l
     auto result =
         m_entries_.insert({lastName, SoccerEntry(firstName, lastName, yob, status, category)});
     itr_current_entry_ = result.first;
+
+    rank_location_ = distance(m_entries_.begin(),itr_current_entry_) + 1;
+
 }
 
 inline void SoccerList::display_current_entry() const
