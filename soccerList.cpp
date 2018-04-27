@@ -39,7 +39,7 @@ void SoccerList::edit_current()
     std::cout << sep << std::endl;
     std::cout << "What would you like to change?\n"
          << "   first name (f)\n"
-         << "   last name(l)\n"
+         << "   last name (l)\n"
          << "   year of birth (y)\n"
          << "   registration status (r)\n" << std::endl;
 
@@ -73,7 +73,7 @@ void SoccerList::edit_current()
                 category = season_ - newYear;
             }
             (itr_current_entry_->second).yob = newYear;
-            (itr_current_entry_->second).category = category;
+            (itr_current_entry_->second).category = compute_category(newYear);
             break;
         }
         case 'r':
