@@ -125,7 +125,12 @@ void SoccerList::read_file(const std::string & file_name)
 {
     ifstream ifs(file_name);
     if (!ifs) // no file -- one will be created when write_file is called
+    {
+        std::cout << "No file found. \n What season would you like to create?\n";
+        std::cin >> season_;
         return;
+    }
+
 
     ifs >> season_;
 
