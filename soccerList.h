@@ -16,7 +16,7 @@ public:
     void move_to_next();
     void move_to_previous();
     void add(const std::string & firstName, const std::string & lastName, int yob, bool status);
-    void delete_ (const std::string  & firstName, const std::string & lastName);
+    void delete_player();
     void edit_current();
 	bool find(const std::string & search_term, int type);
 	bool find(int search_term, int type);
@@ -38,6 +38,15 @@ private:
     int season_;
 };
 
+inline void PhoneBookList::delete_player()
+{
+    if( m_entries_.empty())
+        return;
+    auto toDel = itr_current_entry_;
+    move_to_previous();
+    m_entries_.erase(toDel);
+}
+
 inline void PhoneBookList::add(const std::string & firstName, const std::string & lastName, int yob, bool status)
 {
     ///NOTE: changed cin to be yob, not category
@@ -53,12 +62,6 @@ inline void PhoneBookList::add(const std::string & firstName, const std::string 
     auto result =
         m_entries_.insert({lastName, PhoneBookEntry(firstName, lastName, yob, status, category)});
     itr_current_entry_ = result.first;
-}
-inline void PhoneBookList::delete_ (const std::string & firstName, const std::string & lastName)
-{
-    // itr_current_entry_= m_entries_.find(lastName);
-    // m_entries_.erase(itr_current_entry_);
-    //erase by iterator
 }
 
 inline void PhoneBookList::display_current_entry() const

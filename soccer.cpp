@@ -155,17 +155,12 @@ void PhoneBook::execute(char command, bool & done)
         }
 ///&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&///
         case 'd': {
-            cout << "Enter the last name: ";
-            string last_name;
-            getline(cin, last_name);
-            cout << "Enter the first name: ";
-            string first_name;
-            getline(cin, first_name);
- //           cout << "Are you sure? y for yes and n for no: ";
-   //         char choice;
-
-                entry_list_.delete_(last_name, first_name);
-                break;
+            cout << "Are you sure you want to delete this player? (y/n) ";
+            char choice;
+            cin >> choice;
+            if(choice == 'Y' || choice == 'y')
+                entry_list_.delete_player();
+            break;
 
         }
 		case 'z': {
