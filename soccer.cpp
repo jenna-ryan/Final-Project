@@ -166,6 +166,11 @@ void SoccerProg::execute(char command, bool & done)
             done = true;
             break;
         }
+        default:
+        {
+            entry_list_.set_message("Command not recognized.");
+            break;
+        }
     }
 }
 
@@ -240,6 +245,11 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
 
 			if(!found)
                 entry_list_.set_message("Entry not found.\n");
+            break;
+        }
+        default:
+        {
+            entry_list_.set_message("Command not recognized.");
             break;
         }
     }
