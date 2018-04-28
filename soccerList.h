@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <sstream>
 
 #include "soccerEntry.h"
 
@@ -32,6 +33,7 @@ public:
     int compute_category(int yob);
     void new_season(int year);
     void clear_searches();
+    bool no_searches() {return search_results_.empty();}
     std::string last_name_check(const std::string & ln);
     void add_search();
     void show_message() const;
@@ -81,8 +83,15 @@ inline void SoccerList::delete_player()
 {
     if( m_entries_.empty())
         return;
+    if(itr_current_entry_ == --m_entries_.end())
+    {
+        auto toDel = itr_current_entry_;
+        move_to_previous();
+        m_entries_.erase(toDel);
+        return;
+    }
     auto toDel = itr_current_entry_;
-    move_to_previous();
+    move_to_next();
     m_entries_.erase(toDel);
     --rank_location_;
 }
@@ -91,27 +100,56 @@ inline void SoccerList::full_delete()
 {
     if( m_entries_.empty() || search_results_.empty())
         return;
-    auto toDel = itr_current_entry_;
-    move_to_previous();
-    m_entries_.erase(toDel);
-    --rank_location_;
+    if(itr_current_entry_ == --m_entries_.end())
+    {
+        auto toDel = itr_current_entry_;
+        move_to_previous();
+        m_entries_.erase(toDel);
+    }
+    else
+    {
+        auto toDel = itr_current_entry_;
+        move_to_next();
+        m_entries_.erase(toDel);
+        --rank_location_;
+    }
 
-    toDel = itr_search_current_entry_;
-    previous_search();
+    auto toDel = itr_search_current_entry_;
+    next_search();
     search_results_.erase(toDel);
-    --search_rank_location_;
 }
 
 inline void SoccerList::add(const std::string & firstName, const std::string & lastName, int yob, bool status)
 {
-    int category = season_-yob;
-    while (category<4 || category>16)
-    {
-        std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
-        std::cout << "Please reenter the year of birth: " << std::endl;
-        std::cin >> yob;
-        category = season_ - yob;
-    }
+//    int category = season_- yob;
+//    while (category<4 || category>16)
+//    {
+//        std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
+//        std::cout << "Please reenter the year of birth: " << std::endl;
+//        std::cin >> yob;
+//        category = season_ - yob;
+//    }
+
+    int category = season_ - yob;
+            while(category < 4 || category > 16)
+            {
+                std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
+
+                bool valid = false;
+                while(!valid)
+                {
+                    std::cout << "year of birth: ";
+                    std::string yob_ss;
+                    getline(std::cin, yob_ss);
+                    std::stringstream ss(yob_ss);
+                    ss >> yob;
+                    if(ss.eof())
+                        valid = true;
+                }
+                category = season_ - yob;
+            }
+
+
     category = compute_category(yob);
 
     auto result =

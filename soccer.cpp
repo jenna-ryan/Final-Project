@@ -91,7 +91,10 @@ void SoccerProg::execute(char command, bool & done)
 
         case 'e': {
             if (entry_list_.empty())
+            {
+                entry_list_.set_message("No players to edit.");
                 return;
+            }
             entry_list_.edit_current();
             break;
         }
@@ -145,6 +148,11 @@ void SoccerProg::execute(char command, bool & done)
             break;
         }
         case 'd': {
+            if (entry_list_.empty())
+            {
+                entry_list_.set_message("No players to delete.");
+                return;
+            }
             cout << "Are you sure you want to delete this player? (y/n) ";
             char choice;
             cin >> choice;
@@ -169,17 +177,26 @@ void SoccerProg::execute(char command, bool & done)
 		case 'r': {
             int year;
             char choice;
-		    cout << "The year of the new season: ";
-		    cin >> year;
+            bool valid = false;
+		    cout << "Enter year of the new season: ";
+			while(!valid){
+        	    string year_ss;
+            	getline(cin, year_ss);
+				std::stringstream ss(year_ss);
+				ss >> year;
+				if(ss.eof())
+					valid = true;
+                else
+                    cout << "   Please re-enter year: ";
+			}
+
 		    cout << "Are you sure you want to proceed? (y/n)\n";
 		    cin >> choice;
 
-		    if(choice == 'N' || choice == 'n')
-                break;
-            else
-            {
+		    if(choice == 'Y' || choice == 'y')
                 entry_list_.new_season(year);
-            }
+            else
+                break;
 			break;
 		}
         case 'q': {
@@ -210,8 +227,11 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             break;
          }
         case 'e': {
-            if (entry_list_.empty())
+            if (entry_list_.empty()||entry_list_.no_searches())
+            {
+                entry_list_.set_message("No players to edit.");
                 return;
+            }
             entry_list_.edit_current();
             break;
         }
@@ -255,6 +275,11 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             break;
         }
         case 'd': {
+            if (entry_list_.empty() || entry_list_.no_searches() )
+            {
+                entry_list_.set_message("No players to delete.");
+                return;
+            }
             cout << "Are you sure you want to delete this player? (y/n) ";
             char choice;
             cin >> choice;
@@ -263,16 +288,23 @@ void SoccerProg::search_execute(char command, bool & done, bool & really_done)
             break;
         }
 		case 'z': {
+
+		    if(entry_list_.no_searches())
+            {
+                entry_list_.set_message("No results to print.");
+                break;
+            }
             string printFilename;
 		    cout << "Enter file name to save information to:";
 		    cin >> printFilename;
             entry_list_.print_searches(printFilename);
+            entry_list_.set_message(("Search results printed to: " + printFilename));
 			break;
 		}
 		case 'r': {
-            entry_list_.clear_searches();
+		    if(entry_list_.no_searches() == 0)
+                entry_list_.clear_searches();
             done = true;
-			break;
 			return;
 		}
         case 'q': {

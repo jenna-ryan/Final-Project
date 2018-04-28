@@ -89,15 +89,36 @@ void SoccerList::edit_current()
         }
         case 'y':
         {
-            std::cout << "Enter new birth year: ";
-            int newYear;
-            std::cin >> newYear;
+            cin.get();
+            bool valid = false;
+			int newYear;
+			while(!valid)
+            {
+                std::cout << "Enter new birth year: ";
+        	    string yob_ss;
+            	getline(cin, yob_ss);
+				std::stringstream ss(yob_ss);
+				ss >> newYear;
+				if(ss.eof())
+					valid = true;
+			}
+
             int category = season_ - newYear;
             while(category < 4 || category > 16)
             {
                 std::cout << "Players younger than 4 or older than 16 cannot play in this summer league." << std::endl;
-                std::cout << "Please reenter new year of birth: " << std::endl;
-                std::cin >> newYear;
+
+                bool valid = false;
+                while(!valid)
+                {
+                    cout << "year of birth: ";
+                    string yob_ss;
+                    getline(cin, yob_ss);
+                    std::stringstream ss(yob_ss);
+                    ss >> newYear;
+                    if(ss.eof())
+                        valid = true;
+                }
                 category = season_ - newYear;
             }
             (itr_current_entry_->second).yob = newYear;
